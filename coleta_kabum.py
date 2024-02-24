@@ -11,7 +11,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support import expected_conditions as condicao_esperada
 
 class KabumScrapy:
-    def __init__(self, produto, headless=False, deletar_xlsx=False) -> None:
+    def __init__(self, produto=None, headless=False, deletar_xlsx=False) -> None:
         """Inicializador da classe"""
 
         print('==================================')
@@ -24,6 +24,10 @@ class KabumScrapy:
         self.produto = produto
         self.headless = headless
         self.deletar_xlsx = deletar_xlsx
+
+        if produto is None:
+            produto = input('\nDigite o nome do produto a pesquisar: ').strip()
+        self.produto = produto
 
         """Criação de logs que ficam salvos no arquivo 'log' na raiz do projeto"""
         logging.basicConfig(format='%(levelname)s [%(asctime)s]: %(message)s (Linha: %(lineno)d) [%(filename)s])',
@@ -167,12 +171,5 @@ class KabumScrapy:
 
   
 if __name__ == '__main__':
-    """
-    Para utilizar a variável produto como input (declarar ao rodar o bot) descomente as linhas 152 e 153 e comente a linha 154.
-    Para utilizar o parametro deixe a linha 152 e 153 comentadas e indique o produto á ser pesquisado na linha 154 dentro das aspas.
-    """
-    
-    # produto = input(str('\nDigite o nome do produto á pesquisar: '))
-    # iniciar = KabumScrapy(produto=produto)
-    iniciar = KabumScrapy(produto='i7')
+    iniciar = KabumScrapy()
     iniciar.iniciaizador_bot()
