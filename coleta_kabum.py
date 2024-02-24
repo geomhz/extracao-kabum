@@ -159,7 +159,7 @@ class KabumScrapy:
         excel_csv = excel_xlsx.replace(".xlsx", ".csv")
 
         df = pd.read_excel(excel_xlsx)
-        df.to_csv(excel_csv, index=False)
+        df.to_csv(excel_csv, index=False, encoding='utf-8-sig')
         logging.info('NOVO .CSV CRIADO COM SUCESSO')
 
         if self.deletar_xlsx:
