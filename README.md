@@ -7,9 +7,13 @@ Este script é uma automação de coleta de dados do website Kabum onde extraimo
 ### Funcionalidades
 
 - **DADOS COLETADOS:** Todos os dados coletados serão adicionados ao arquivo "Produto - SEUPRODUTO" com a extensão ".xlsx" e ".csv".
+
 - **SEGUNDO PLANO:** Para rodar a aplicação em segundo plano altere o parâmetro "headless=False" para "headless=True" na linha 14.
+
 - **DELETE .XLSX OU NÃO:** Para deletar o arquivo ".xlsx" após a criação do ".csv" altere o parâmetro "deletar_xlsx=False" para "deletar_xlsx=True"
-- **PRODUTO Á SER PESQUISADO:** Na linha 14 escolha "produto=None" para declarar no terminal o produto que quer pesquisar ao iniciar a aplicação ou declare para "produto='SEUPRODUTO'" para iniciar direto!
+
+- **PRODUTO Á SER PESQUISADO:** Na linha 14 escolha "produto=None" para declarar no terminal o produto que quer pesquisar ao iniciar a aplicação ou altere para "produto='SEUPRODUTO'" para iniciar direto!
+
 - **LOGS:** Ao iniciar a aplicação um arquivo de log será criado na pasta raiz do projeto onde é possível verificar e validar os processos de sucesso, avisos e erros detalhados da aplicação.
 
 ## Do inicio!
