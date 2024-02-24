@@ -6,13 +6,19 @@ Este script é uma automação de coleta de dados do website Kabum onde extraimo
 
 ### Funcionalidades
 
+- **DADOS DO DESENVOLVEDOR:** A classe InformacoesAplicativo nos traz informações de cabeçalho do desenvolvedor, podendo ser alterado por parâmetros.
+
 - **DADOS COLETADOS:** Todos os dados coletados serão adicionados ao arquivo "Produto - SEUPRODUTO" com a extensão ".xlsx" e ".csv".
 
-- **SEGUNDO PLANO:** Para rodar a aplicação em segundo plano altere o parâmetro "headless=False" para "headless=True" na linha 14.
+- **PRODUTO Á SER PESQUISADO:** Para declarar o produto á ser pesquisado mantenha "produto=None" para declarar o produto no terminal ao iniciar a aplicação ou altere para "produto='Ryzen 7'" para fazer a busca de todos Ryzen 7 que encontrar. OBS: O produto foi um exemplo e poderá ser declarado tudo que tem no site.
+
+- **SEGUNDO PLANO:** Para rodar a aplicação em segundo plano altere o parâmetro "headless=False" para "headless=True".
+
+- **MODO ANONIMO:** Para abrir o navegador em modo anônimo altere o parâmetro "navegador_anonimo=False" para "navegador_anonimo=True"
 
 - **DELETE .XLSX OU NÃO:** Para deletar o arquivo ".xlsx" após a criação do ".csv" altere o parâmetro "deletar_xlsx=False" para "deletar_xlsx=True"
 
-- **PRODUTO Á SER PESQUISADO:** Na linha 14 escolha "produto=None" para declarar no terminal o produto que quer pesquisar ao iniciar a aplicação ou altere para "produto='SEUPRODUTO'" para iniciar direto!
+- **CSV:** O arquivo ".CSV" declaramos utilizar o separador ";" para separar as informações por coluna (como no .xlsx). Para trazer informações separados por "," em apenas uma coluna, utilize delete o separador "," (Não recomendado, bastante poluído).
 
 - **LOGS:** Ao iniciar a aplicação um arquivo de log será criado na pasta raiz do projeto onde é possível verificar e validar os processos de sucesso, avisos e erros detalhados da aplicação.
 
@@ -52,6 +58,7 @@ pip install -r requirements.txt
 ```bash
 headless=False ou True # False = Navegador visível, True = Navegador oculto
 deletar_xlsx=False ou True # False = Deletar .xlsx, True = Manter .xlsx
+navegador_anonimo=False ou True # False = Abrir modo normal, True = Abrir em modo anônimo
 ```
 
 5. Defina o seu produto á ser pesquisado na linha 14:

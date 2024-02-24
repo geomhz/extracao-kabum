@@ -1,6 +1,7 @@
 import os
 import logging
 import pandas as pd
+from datetime import datetime
 from time import sleep
 from openpyxl import Workbook
 from selenium import webdriver
@@ -10,18 +11,37 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.support import expected_conditions as condicao_esperada
 
-class KabumScrapy:
-    def __init__(self, produto=None, headless=False, deletar_xlsx=False) -> None:
-        """Inicializador da classe"""
+class InformacoesAplicativo:
+    def exibir_cabecalho(self, nome_desenvolvedor="Geovanne Murata", contato_whatsapp="+55 11 95284-2140"):
+        """Exibe informações do desenvolvedor e contato no console."""
+        print('==================================')
+        print('*****    Desenvolvido por:   *****')
+        print(f'*****    {nome_desenvolvedor}     *****')
+        print('==================================')
+        print(f'=====> Whatsapp: {contato_whatsapp}\n')
 
-        print('==================================')
-        print('*****  Desenvolvido por:     *****')
-        print('*****    Geovanne Murata     *****')
-        print('==================================')
-        print('=====> Whatsapp: +55 11 95284-2140\n')
-        print('Raspagem de dados iniciada!\n')
+class KabumScrapy(InformacoesAplicativo):
+    def __init__(self, produto='i5', headless=True,  navegador_anonimo=False, deletar_xlsx=True) -> None:
+        """
+        Inicializador da classe e definição de parametros
+
+        produto=None (input para declarar o produto ao iniciar o script)
+        produto="i7" (exemplo de declaração do produto á ser pesquisado. Não abre input e inicia direto)
+
+        headless=False (abre o navegador e a automação fica aparente)
+        headless=True (inicia com o navegador oculto)
+        
+        navegador_anonimo=False (inicia o navegador em modo normal)
+        navegador_anonimo=True (inicia o navegador em modo anônimo)
+
+        deletar_xlsx=False (mantém tanto o arquivo ".xlsx" quanto o arquivo ".csv")
+        deletar_xlsx=True (deleta o arquivo ".xlsx" e mantém apenas o ".csv")
+        """
+        
+        self.exibir_cabecalho()
 
         self.produto = produto
+        self.navegador_anonimo = navegador_anonimo
         self.headless = headless
         self.deletar_xlsx = deletar_xlsx
 
@@ -29,19 +49,21 @@ class KabumScrapy:
             produto = input('\nDigite o nome do produto a pesquisar: ').strip()
         self.produto = produto
 
-        """Criação de logs que ficam salvos no arquivo 'log' na raiz do projeto"""
+        print('Coleta de dados iniciado!\n')
+
+        """Criação de logs que ficarão salvos no arquivo 'logs.log' na raiz do projeto"""
         logging.basicConfig(format='%(levelname)s [%(asctime)s]: %(message)s (Linha: %(lineno)d) [%(filename)s])',
                             datefmt='%d/%m/%Y %I:%M:%S %p',
                             level=logging.INFO,
                             filename='logs.log',
                             filemode='w')
-        
+
         logging.warning('ATENCAO: NAO MEXA NO ARQUIVO EXCEL ENQUANTO O BOT ESTA RODANDO.')
         
         self.website_inicial = 'https://www.kabum.com.br/'
 
     def xpath_geral(self):
-        """XPATH geral da aplicação para interação e extração"""
+        """XPATH geral da aplicação para interação do site e extração dos dados"""
 
         self.xpath_pesquisar = {
             'input_busca': '(//*[@id="input-busca"])',
@@ -56,7 +78,7 @@ class KabumScrapy:
         }
 
     def iniciaizador_bot(self):
-        """Executa outras funções"""
+        """Executar funções gerais"""
 
         self.xpath_geral()
         self.iniciar_navegador()
@@ -73,7 +95,9 @@ class KabumScrapy:
         options.add_argument("--log-level=3")
         options.add_argument("--ignore-certificate-errors")
 
-        """Headless serve para rodar em segundo plano sem precisar abrir o navegador. Altere para True caso queira testar"""
+        if self.navegador_anonimo:
+            options.add_argument("--incognito")
+
         if self.headless:
             options.add_argument("--headless")
 
@@ -142,7 +166,7 @@ class KabumScrapy:
                     break
             except:
                 break
-        
+
     def criar_excel(self):
         """Criação do arquivo .xlsx"""
         self.wb = Workbook()
@@ -159,17 +183,16 @@ class KabumScrapy:
         excel_csv = excel_xlsx.replace(".xlsx", ".csv")
 
         df = pd.read_excel(excel_xlsx)
-        df.to_csv(excel_csv, index=False, encoding='utf-8-sig')
+        df.to_csv(excel_csv, index=False, encoding='latin-1', sep=';')
         logging.info('NOVO .CSV CRIADO COM SUCESSO')
 
         if self.deletar_xlsx:
             if os.path.exists(excel_xlsx):
                 os.remove(excel_xlsx)
                 logging.info('ARQUIVO .XSLX DELETADO COM SUCESSO')
-        else:
-            logging.warning('ARQUIVO .XLSX NÃO DELETADO')
+            else:
+                logging.warning('ARQUIVO .XLSX NÃO DELETADO')
 
-  
 if __name__ == '__main__':
     iniciar = KabumScrapy()
     iniciar.iniciaizador_bot()
