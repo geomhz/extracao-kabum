@@ -1,7 +1,6 @@
 import os
 import logging
 import pandas as pd
-from datetime import datetime
 from time import sleep
 from openpyxl import Workbook
 from selenium import webdriver
