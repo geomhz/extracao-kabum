@@ -112,4 +112,4 @@ Linked In - [Visite meu LinkedIn!](https://www.linkedin.com/in/geovanne-murata/)
 
 WhatsApp - [Me chame no Whats](https://api.whatsapp.com/send/?phone=5511952842140)
 
-Project Link: [car-store-django](https://github.com/geomhz/car-store-django/)
+Project Link: [extracao-kabum](https://github.com/geomhz/extracao-kabum)
